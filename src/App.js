@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import React, {useEffect, useState} from 'react'
+import React, {Fragment, useEffect, useState} from 'react'
 import {useDispatch, useSelector} from "react-redux";
 import {fetchPokemonInitialData, TYPES} from "./actions";
 import {tab} from "@testing-library/user-event/dist/tab";
@@ -72,6 +72,7 @@ function App() {
                 }
     }, [playersHand])
 
+
     function addToDealersHand(){
         dispatch({
             type: TYPES.ADD_TO_DEALERS_HAND,
@@ -108,24 +109,27 @@ function App() {
         let count = 0
         for (let i = 0; i < dealersHand.length; i++) {
             count += dealersHand[i].value
-            console.log(count,dealersHand)
             if(count < 16 ){
                console.log('less')
                 addToDealersHand()
                 }
-            // else if(21 < count && count >17){
-            //     if(playerStay> count){
-            //         setWinner(true)
-            //     }
-            // }
-            // else if(count > 21){
-            //     setDealerBusted(true)
-            // }
-            // else if(count === 21){
-            //     setNumber(count)
-            //     setDealerWinner(true)
-            // }
+            else{
+                console.log('done')
+            }
         }
+        //     else if(21 < count && count >17){
+        //         if(playerStay> count){
+        //             setWinner(true)
+        //         }
+        //     }
+        //     else if(count > 21){
+        //         setDealerBusted(true)
+        //     }
+        //     else if(count === 21){
+        //         setNumber(count)
+        //         setDealerWinner(true)
+        //     }
+        // }
     }
 
     return (
@@ -138,9 +142,19 @@ function App() {
                   busted={busted}
               />
           </div>
-          <button onClick={startOnClickHandler}>START</button>
-          <button onClick={playerOnClickHandler}>HIT ME</button>
-          <button onClick={standOnClickHandler}  >STAND</button>
+          {((dealersHand.length === 0))&&
+              <button className={"button"} onClick={startOnClickHandler} disabled={(dealersHand.length >0)}>START</button>
+          }
+          {(playersHand.length > 0) &&
+              <span>
+                  <button className={"button"} onClick={playerOnClickHandler} disabled={(playersHand.length === 0)}>HIT
+                      ME
+                  </button>
+                  <button className={"button"} onClick={standOnClickHandler}
+                          disabled={(playersHand.length === 0)}>STAND
+                  </button>
+              </span>
+          }
           <div className="player">
               <PlayersHand/>
           </div>

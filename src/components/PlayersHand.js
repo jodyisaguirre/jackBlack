@@ -9,7 +9,7 @@ export default function PlayersHand(){
     return(
         <Fragment>
             {(playersHand?.length >0)&&
-                playersHand?.map(card => <img key={card?.value} src={card?.url}/>)
+                playersHand?.map((card, index) => <img key={card?.name + index} src={card?.url}/>)
             }
         </Fragment>
     )
